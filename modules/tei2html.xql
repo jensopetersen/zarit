@@ -37,6 +37,7 @@ declare function tei-to-html:dispatch($node as node()*, $options) as item()* {
         case element(tei:item) return tei-to-html:item($node, $options)
         case element(tei:label) return tei-to-html:label($node, $options)
         case element(tei:ref) return tei-to-html:ref($node, $options)
+        case element(tei:sp) return tei-to-html:sp($node, $options)
         case element(tei:said) return tei-to-html:said($node, $options)
         case element(tei:foreign) return tei-to-html:foreign($node, $options)
         case element(tei:mentioned) return tei-to-html:mentioned($node, $options)
@@ -55,6 +56,7 @@ declare function tei-to-html:dispatch($node as node()*, $options) as item()* {
         case element(tei:seg) return tei-to-html:seg($node, $options)
         case element(tei:bibl) return tei-to-html:bibl($node, $options)
         case element(tei:respStmt) return tei-to-html:respStmt($node, $options)
+        case element(exist:match) return tei-to-html:exist-match($node, $options)
         default return tei-to-html:recurse($node, $options)
 };
 
@@ -228,6 +230,22 @@ declare function tei-to-html:said($node as element(tei:said), $options) as eleme
     <p class="said">{tei-to-html:recurse($node, $options)}</p>
 };
 
+declare function tei-to-html:sp($node as element(tei:sp), $options) as element() {
+    if ($node/tei:l) then
+        <div xmlns="http://www.w3.org/1999/xhtml" class="sp" id="{tei-to-html:get-id($node)}">{ tei-to-html:recurse($node/node(), '') }</div>
+    else
+        <div xmlns="http://www.w3.org/1999/xhtml" class="sp" id="{tei-to-html:get-id($node)}">
+            { tei-to-html:recurse($node/tei:speaker, '') }
+            <p class="p-ab">{ tei-to-html:recurse($node/tei:ab, '') }</p>
+        </div>                
+};
+
+declare function tei-to-html:exist-match($node as element(), $options) as element() {
+    <mark xmlns="http://www.w3.org/1999/xhtml">{ $node/node() }</mark>                    
+};
+
+
+
 declare function tei-to-html:lb($node as element(tei:lb), $options) as element() {
     <span class="padabreak"/>
 };
@@ -297,7 +315,9 @@ declare function tei-to-html:lg($node as element(tei:lg), $options) {
     (
     if ($node/@xml:id) then <a class="anchor" id="{$node/@xml:id}"></a> else ()
     ,
-    <span class="lg">{tei-to-html:recurse($node, $options)}</span>
+    <div xmlns="http://www.w3.org/1999/xhtml" class="lg" id="{tei-to-html:get-id($node)}">
+        { tei-to-html:recurse($node/node(), '') }
+        </div>
     )
 };
 
@@ -536,4 +556,8 @@ declare function tei-to-html:serialize-list($sequence as item()+) as xs:string {
                 ', and ',
                 $sequence[$sequence-count]
                 )
+};
+
+declare %private function tei-to-html:get-id($node as element()) {
+    ($node/@xml:id, $node/@exist:id)[1]
 };
