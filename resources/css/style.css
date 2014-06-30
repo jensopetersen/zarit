@@ -1,0 +1,45 @@
+body {
+    margin: 40px 120px;
+}
+
+.app-info {
+    font-size: 75%;
+}
+
+.app-info td {
+    padding-right: 1em;
+}
+.anchor {
+  display: block; position: relative; top: 0; visibility: hidden;
+}
+
+.nonfinal-line {}
+
+.final-line {}
+
+.linebefore {}
+
+.notes {
+  padding-left:10px;
+}
+
+/*.note does not seem to be used*/
+.notes .note {
+  display:block;
+  margin:0;
+  padding:0;
+  font-size:90%;
+}
+/*.note, .notemarker does not seem to be used*/
+.notes .note .notemarker {
+  margin-right:5px;
+}
+.notes span p, .notes span span.citation {
+  display:inline;
+  margin:0px;
+  text-indent:0px;
+}
+
+.hanging-indent {
+    padding-left:2em;
+    }
