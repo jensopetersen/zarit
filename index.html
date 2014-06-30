@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns="http://www.w3.org/1999/xhtml" data-template="templates:surround" data-template-with="templates/page.html" data-template-at="main">
-    <form action="search.html" class="form-inline">
-        <div class="span9">
+    <form action="search.html" class="form form-horizontal">
+        <div class="col-md-9">
             <h1>Shakespeare's Works in TEI</h1>
             <div id="content">
                 <h2>List of Works</h2>
-                <table class="toc">
+                <table class="toc table">
                     <thead>
                         <tr>
                             <th/>
@@ -18,7 +18,7 @@
                     <tbody data-template="app:list-works">
                         <tr data-template="templates:each" data-template-from="works" data-template-to="work">
                             <td class="checkbox">
-                                <span data-template="app:checkbox"/>
+                                <input type="checkbox" name="target-texts" data-template="app:checkbox"/>
                             </td>
                             <td>
                                 <a href="" data-template="app:work-title"/>
@@ -38,18 +38,45 @@
                 </table>
             </div>
         </div>
-        <div class="span3">
-            <div class="well">
-                <fieldset>
-                    <input type="search" name="query" placeholder="Search string" class="span12" data-template="templates:form-control"/>
-                    <input type="hidden" name="field" value="text"/>
-                </fieldset>
-                <a href="search.html">Advanced search</a>
+        <div class="col-md-3">
+            <div class="well well-sm">
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <span class="input-group">
+                            <input name="query" type="search" class="templates:form-control form-control" placeholder="Search string"/>
+                            <span class="input-group-btn">
+                                <button id="f-btn-search" type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-search"/>
+                                </button>
+                            </span>
+                        </span>
+                        <input type="hidden" name="field" value="text"/>
+                    </div>
+                </div>
+                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Search mode">
+                    <div class="col-md-12 col-xs-12">
+                        <select name="mode" class="form-control" data-template="templates:form-control">
+                            <option value="any">Any</option>
+                            <option value="all">All</option>
+                            <option value="phrase">Phrase</option>
+                            <option value="near-ordered">Near (Ordered)</option>
+                            <option value="near-unordered">Near (Unordered)</option>
+                            <option value="fuzzy">Fuzzy</option>
+                            <option value="wildcard">Wildcard</option>
+                            <option value="regex">Regex</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Type of work to search">
+                    <div class="col-md-12 col-xs-12">
+                        <span class="app:work-types"/>
+                    </div>
+                </div>
             </div>
-            <div class="box">
+            <div class="well well-sm well-dark">
                 <p>This application is based on data provided by The WordHoard Shakespeare, a joint project of the Perseus 
-                Project at Tufts University, The Northwestern University Library, and Northwestern University
-                Academic Technologies.</p>
+				Project at Tufts University, The Northwestern University Library, and Northwestern University
+				Academic Technologies.</p>
                 <img src="resources/images/nu-logo.gif"/>
             </div>
         </div>
