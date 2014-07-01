@@ -123,3 +123,7 @@ mark
     font-weight: bold;
     padding:0 .5em 0 .5em;
  }
+ 
+ .bottom {
+     margin-top:2em;
+ }

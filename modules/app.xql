@@ -245,12 +245,12 @@ declare function app:navigation($node as node(), $model as map(*)) {
             $node/@*,
             if ($prevDiv) then
                 <a xmlns="http://www.w3.org/1999/xhtml" href="{$prevDiv/@xml:id}.html" class="previous">
-                    <i class="glyphicon glyphicon-chevron-left"/> Previous Scene</a>
+                    <i class="glyphicon glyphicon-chevron-left"/> Previous</a>
             else
                 (),
             if ($nextDiv) then
                 <a xmlns="http://www.w3.org/1999/xhtml" href="{$nextDiv/@xml:id}.html" class="next">
-                    Next Scene <i class="glyphicon glyphicon-chevron-right"/></a>
+                    Next<i class="glyphicon glyphicon-chevron-right"/></a>
             else
                 (),
             <h5 xmlns="http://www.w3.org/1999/xhtml"><a href="{$work/@xml:id}">{app:work-title($work)}</a></h5>
