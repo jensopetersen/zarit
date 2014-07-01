@@ -10,6 +10,21 @@ if ($exist:path eq "/") then
         <redirect url="works/"/>
     </dispatch>
 
+else if ($exist:resource = ("search.html")) then
+    (: the html page is run through view.xql to expand templates :)
+    <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+        <forward url="{$exist:controller}/{$exist:resource}">
+            <set-header name="Cache-Control" value="no-cache"/>
+        </forward>
+        <view>
+            <forward url="{$exist:controller}/modules/view.xql"/>
+        </view>
+        <error-handler>
+            <forward url="{$exist:controller}/error-page.html" method="get"/>
+            <forward url="{$exist:controller}/modules/view.xql"/>
+        </error-handler>
+    </dispatch>
+
 else if (contains($exist:path, "/$shared/")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <forward url="/shared-resources/{substring-after($exist:path, '/$shared/')}">
