@@ -127,3 +127,9 @@ mark
  .bottom {
      margin-top:2em;
  }
+ 
+ 
+ #header {
+     background-image: url("");
+     margin-top:-3em; /*hack!*/
+}

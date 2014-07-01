@@ -2,7 +2,7 @@ xquery version "3.0";
 
 module namespace demo="http://exist-db.org/apps/demo";
 
-import module namespace config="http://exist-db.org/apps/shakes/config" at "config.xqm";
+import module namespace config="http://exist-db.org/apps/zarit/config" at "config.xqm";
 import module namespace test="http://exist-db.org/xquery/xqsuite" at "resource:org/exist/xquery/lib/xqsuite/xqsuite.xql";
 
 import module namespace templates="http://exist-db.org/xquery/templates";

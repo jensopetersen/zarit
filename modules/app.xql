@@ -3,7 +3,7 @@ xquery version "3.0";
 module namespace app="http://exist-db.org/apps/";
 
 import module namespace templates="http://exist-db.org/xquery/templates";
-import module namespace config="http://exist-db.org/apps/shakes/config" at "config.xqm";
+import module namespace config="http://exist-db.org/apps/zarit/config" at "config.xqm";
 import module namespace tei-to-html="http://exist-db.org/xquery/app/tei2html" at "tei2html.xql";
 import module namespace kwic="http://exist-db.org/xquery/kwic" at "resource:org/exist/xquery/lib/kwic.xql";
     
@@ -34,7 +34,7 @@ declare function functx:escape-for-regex
  } ;
  
 (:~
- : List Shakespeare works
+ : List SARIT works
  :)
 declare 
     %templates:wrap
@@ -283,11 +283,11 @@ function app:query($node as node()*, $model as map(*), $query as xs:string?, $mo
     let $queryExpr := app:create-query($query, $mode)
     return
         if (empty($queryExpr) or $queryExpr = "") then
-            let $cached := session:get-attribute("apps.shakespeare")
+            let $cached := session:get-attribute("apps.zarit")
             return
                 map {
                     "hits" := $cached,
-                    "query" := session:get-attribute("apps.shakespeare.query")
+                    "query" := session:get-attribute("apps.zarit.query")
                 }
         else
             (:Get the work ids of the work types selected.:)  
@@ -311,8 +311,8 @@ function app:query($node as node()*, $model as map(*), $query as xs:string?, $mo
                 order by ft:score($hit) descending
                 return $hit
             let $store := (
-                session:set-attribute("apps.shakespeare", $hits),
-                session:set-attribute("apps.shakespeare.query", $queryExpr)
+                session:set-attribute("apps.zarit", $hits),
+                session:set-attribute("apps.zarit.query", $queryExpr)
             )
             return
                 (: Process nested templates :)
