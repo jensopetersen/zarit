@@ -17,6 +17,21 @@ declare function functx:contains-any-of
    some $searchString in $searchStrings
    satisfies contains($arg,$searchString)
  } ;
+
+(:modified by applying functx:escape-for-regex() :)
+declare function functx:number-of-matches 
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer {
+       
+   count(tokenize(functx:escape-for-regex(functx:escape-for-regex($arg)),functx:escape-for-regex($pattern))) - 1
+ } ;
+
+declare function functx:escape-for-regex
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,
+           '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
+ } ;
  
 (:~
  : List Shakespeare works
@@ -251,7 +266,7 @@ declare function app:view($node as node(), $model as map(*), $id as xs:string, $
             $div
     return
         <div xmlns="http://www.w3.org/1999/xhtml" class="play">
-        { tei2:tei2html($div) }
+        { tei-to-html:recurse($div, '') }
         </div>
 };
 
@@ -322,6 +337,7 @@ declare %private function app:create-query($query-string as xs:string?, $mode as
             let $lucene2xml := app:lucene2xml($luceneXML/node(), $mode)
             return $lucene2xml
         else
+            let $last-item := tokenize($query-string, '\s')[last()]
             let $query-string := tokenize($query-string, '\s')
             let $query-string := 
                 if ($last-item castable as xs:integer) 

@@ -232,11 +232,11 @@ declare function tei-to-html:said($node as element(tei:said), $options) as eleme
 
 declare function tei-to-html:sp($node as element(tei:sp), $options) as element() {
     if ($node/tei:l) then
-        <div xmlns="http://www.w3.org/1999/xhtml" class="sp" id="{tei-to-html:get-id($node)}">{ tei-to-html:recurse($node/node(), '') }</div>
+        <div xmlns="http://www.w3.org/1999/xhtml" class="sp" id="{tei-to-html:get-id($node)}">{ tei-to-html:recurse($node/node(), <options/>) }</div>
     else
         <div xmlns="http://www.w3.org/1999/xhtml" class="sp" id="{tei-to-html:get-id($node)}">
-            { tei-to-html:recurse($node/tei:speaker, '') }
-            <p class="p-ab">{ tei-to-html:recurse($node/tei:ab, '') }</p>
+            { tei-to-html:recurse($node/tei:speaker, <options/>) }
+            <p class="p-ab">{ tei-to-html:recurse($node/tei:ab, <options/>) }</p>
         </div>                
 };
 
@@ -316,8 +316,11 @@ declare function tei-to-html:lg($node as element(tei:lg), $options) {
     if ($node/@xml:id) then <a class="anchor" id="{$node/@xml:id}"></a> else ()
     ,
     <div xmlns="http://www.w3.org/1999/xhtml" class="lg" id="{tei-to-html:get-id($node)}">
-        { tei-to-html:recurse($node/node(), '') }
-        </div>
+        { 
+        for $child in $node/node()
+        return tei-to-html:recurse($child, <options/>) 
+        }
+    </div>
     )
 };
 
