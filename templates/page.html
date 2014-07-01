@@ -14,7 +14,9 @@
             <div class="container" id="main-container">
                 <div class="row">
                     <div class="col-md-12" id="header">
-                        <img src="resources/images/indolib_logo.png"/>
+                        <a href=".">
+                            <img src="resources/images/indolib_logo.png"/>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
@@ -28,10 +30,11 @@
                         <div class="navbar-collapse collapse" id="navbar-collapse-1">
                             <ul class="nav navbar-nav">
                                 <li class="dropdown" id="about">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project Info</a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="{demo}/index.html">Demo App</a>
+                                            <a href="github.com/paddymcall/SARIT">GitHub
+                                                Text Repo</a>
                                         </li>
                                         <li>
                                             <a href="{dashboard}/index.html">Dashboard</a>
@@ -42,10 +45,10 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown" id="sarit">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SARIT</a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help Files</a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="{zarit}/works/">Overview of Works</a>
+                                            <a href="search-help.html">Search Help</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -80,10 +83,6 @@
                                         <li>
                                             <a href="http://exist-db.org/api/index.html">Javadocs</a>
                                         </li>
-                                        <li>
-                                            <a href="https://github.com/eXist-db/exist">Github
-                                                Repo</a>
-                                        </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown" id="administration">
@@ -108,9 +107,17 @@
             </div>
         </div>
         <div id="footer">
-            <div id="copyright">
-                <p>Copyright eXist-db Project 2013</p>
+            <div id="exist">
+                <a href="http://exist-db.org/">
+                    <img src="resources/images/existdb.png" width="100"/>
+                </a>
             </div>
+            <div id="tei">
+                <a href="http://www.tei-c.org/">
+                    <img src="resources/images/powered-by-TEI.png"/>
+                </a>
+            </div>
+            <div id="copyright">© 2014 SARIT</div>
         </div>
         <script type="text/javascript">
             $(document).ready(function() {

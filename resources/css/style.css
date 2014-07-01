@@ -129,7 +129,43 @@ mark
  }
  
  
- #header {
+#header {
      background-image: url("");
      margin-top:-3em; /*hack!*/
+}
+
+#copyright {
+    float: right; 
+    width: 100px;
+    color:#0083CB;
+    }
+
+#footer {
+    background-color:inherit;
+    background-image: url("");
+    border: 2px solid #0083CB;
+    }
+
+.grey-bot {
+    background-image: url("");
+}
+
+#exist img {
+    margin-right:2em;
+    float: left; 
+    width: 100px;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-25%);
+    -ms-transform: translateY(-25%);
+    transform: translateY(-25%);
+}
+
+#tei img {
+    float: left; width: 100px;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-25%);
+    -ms-transform: translateY(-25%);
+    transform: translateY(-25%);
 }
