@@ -46,3 +46,73 @@ body {
 .hanging-indent {
     padding-left:2em;
     }
+
+/*moved from exist-css below*/
+
+/*added rules begin*/
+table {
+    border:0;
+}
+#main {
+    padding-bottom:.5em;
+} 
+.poem-list td {
+    padding:.5em;
+}
+
+.box img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box p {
+    text-align: justify;
+}
+.checkbox input {
+    margin-bottom:.4em;
+}
+
+.work-type {
+    color:gray;
+}
+/*added rules end*/
+
+.bk-nav .previous {
+    float: right;
+}
+
+.hit {
+    width: 100%;
+}
+
+tr.reference {
+}
+
+td .number {
+    padding-right: 1em;
+}
+
+td.previous {
+    text-align: right;
+    /*width:25%;*/
+}
+
+td.hi {
+    padding: 0 8px;
+    text-align: center;
+    vertical-align: middle;
+    background-color:inherit; 
+}
+
+td.following {
+    text-align: left;
+    /*width:25%;*/
+}
+
+mark
+    {
+    color:#0083cb;
+    background-color: white;
+    font-weight: bold;
+ }
