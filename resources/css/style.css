@@ -78,7 +78,13 @@ table {
 }
 /*added rules end*/
 
-.bk-nav .previous {
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+}
+
+.bk-nav .next{
     float: right;
 }
 
@@ -115,4 +121,5 @@ mark
     color:#0083cb;
     background-color: white;
     font-weight: bold;
+    padding:0 .5em 0 .5em;
  }
