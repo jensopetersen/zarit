@@ -266,7 +266,7 @@ declare function app:view($node as node(), $model as map(*), $id as xs:string, $
             $div
     return
         <div xmlns="http://www.w3.org/1999/xhtml" class="play">
-        { tei-to-html:recurse($div, '') }
+        { tei-to-html:recurse($div, <options/>) }
         </div>
 };
 
