@@ -261,7 +261,20 @@ declare function app:view($node as node(), $model as map(*), $id as xs:string, $
     for $div in $model("work")/id($id)
     let $div :=
         if ($query) then
-            util:expand(($div[.//tei:sp[ft:query(., $query)]], $div[.//tei:lg[ft:query(., $query)]]), "add-exist-id=all")
+            util:expand((
+            $div[.//tei:p[ft:query(., $query)]],
+            $div[.//tei:head[ft:query(., $query)]],
+            $div[.//tei:lg[ft:query(., $query)]],
+            $div[.//tei:trailer[ft:query(., $query)]],
+            $div[.//tei:note[ft:query(., $query)]],
+            $div[.//tei:list[ft:query(., $query)]],
+            $div[.//tei:l[ft:query(., $query)]],
+            $div[.//tei:quote[ft:query(., $query)]],
+            $div[.//tei:table[ft:query(., $query)]],
+            $div[.//tei:listApp[ft:query(., $query)]],
+            $div[.//tei:listBibl[ft:query(., $query)]],
+            $div[.//tei:cit[ft:query(., $query)]]),
+            "add-exist-id=all")
         else
             $div
     return
@@ -307,7 +320,20 @@ function app:query($node as node()*, $model as map(*), $query as xs:string?, $mo
                 then collection($config:data-root)/tei:TEI
                 else collection($config:data-root)//tei:TEI[@xml:id = $target-texts]
             let $hits :=
-                for $hit in ($context//tei:sp[ft:query(., $queryExpr)], $context//tei:lg[ft:query(., $queryExpr)])
+                for $hit in (
+                    $context//tei:p[ft:query(., $queryExpr)],
+                    $context//tei:head[ft:query(., $queryExpr)],
+                    $context//tei:lg[ft:query(., $queryExpr)],
+                    $context//tei:trailer[ft:query(., $queryExpr)],
+                    $context//tei:note[ft:query(., $queryExpr)],
+                    $context//tei:list[ft:query(., $queryExpr)],
+                    $context//tei:l[ft:query(., $queryExpr)],
+                    $context//tei:quote[ft:query(., $queryExpr)],
+                    $context//tei:table[ft:query(., $queryExpr)],
+                    $context//tei:listApp[ft:query(., $queryExpr)],
+                    $context//tei:listBibl[ft:query(., $queryExpr)],
+                    $context//tei:cit[ft:query(., $queryExpr)]
+                    )
                 order by ft:score($hit) descending
                 return $hit
             let $store := (
