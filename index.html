@@ -29,9 +29,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Type of work to search">
+                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Authors">
                     <div class="col-md-12 col-xs-12">
-                        <span class="app:work-types"/>
+                        <span class="app:work-authors"/>
+                    </div>
+                </div>
+                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Scripts to search">
+                    <div class="col-md-12 col-xs-12">
+                        <select multiple="multiple" name="script" class="form-control" data-template="templates:form-control">
+                            <option value="all">All</option>
+                            <option value="phrase">Devanagari</option>
+                            <option value="near-ordered">Roman (IAST)</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -49,7 +58,8 @@
                         <tr>
                             <th/>
                             <th>Title</th>
-                            <th>Work Language</th>
+                            <th>Author</th>
+                            <th>Script</th>
                             <th>Download</th>
                             <th>Open</th>
                         </tr>
@@ -61,6 +71,9 @@
                             </td>
                             <td>
                                 <a href="" data-template="app:work-title"/>
+                            </td>
+                            <td>
+                                <a href="" data-template="app:work-author"/>
                             </td>
                             <td class="work-type">
                                 <a href="" data-template="app:work-lang"/>

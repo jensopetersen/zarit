@@ -159,22 +159,21 @@ function app:checkbox($node as node(), $model as map(*), $target-texts as xs:str
         ()
 };
 
-declare function app:work-type($node as node(), $model as map(*)) {
+declare function app:work-author($node as node(), $model as map(*)) {
     let $work := $model("work")/ancestor-or-self::tei:TEI
-    let $id := $work/@xml:id/string()
-    let $work-types := doc(concat($config:data-root, '/', 'work-types.xml'))//item[id = $id]/value
+    let $work-authors := $work//tei:fileDesc/tei:titleStmt/tei:author
     return 
         string-join(
-            for $work-type in $work-types
-            order by $work-type 
-            return $work-type
+            for $work-author in $work-authors
+            order by $work-author 
+            return $work-author
         , ', ')    
 };
 
 declare function app:work-lang($node as node(), $model as map(*)) {
     let $work := $model("work")/ancestor-or-self::tei:TEI
     let $script := $work//tei:text/@xml:lang
-    let $script := if ($script eq 'sa-Latn') then 'IAST' else 'Devanagari'
+    let $script := if ($script eq 'sa-Latn') then 'Roman (IAST)' else 'Devanagari'
     let $auto-conversion := $work//tei:revisionDesc/tei:change[@type eq 'conversion'][@subtype eq 'automatic'] 
     return 
         concat($script, if ($auto-conversion) then ' (automatically converted)' else '')  
@@ -222,13 +221,13 @@ declare function app:copy-params($node as node(), $model as map(*)) {
     }
 };
 
-declare function app:work-types($node as node(), $model as map(*)) {
-    let $types := distinct-values(doc(concat($config:data-root, '/', 'work-types.xml'))//value)
-    let $control :=
-        <select multiple="multiple" name="work-types" class="form-control">
+declare function app:work-authors($node as node(), $model as map(*)) {
+    let $authors := distinct-values(collection($config:data-root)//tei:fileDesc/tei:titleStmt/tei:author)
+    let $control := 
+        <select multiple="multiple" name="work-authors" class="form-control">
             <option value="all">All</option>
-            {for $type in $types
-            return <option value="{$type}">{$type}</option>
+            {for $author in $authors
+            return <option value="{$author}">{$author}</option>
             }
         </select>
     return
@@ -289,10 +288,10 @@ declare function app:view($node as node(), $model as map(*), $id as xs:string, $
 :)
 declare 
     %templates:default("mode", "any")
-    %templates:default("work-types", "all")
+    %templates:default("work-authors", "all")
     %templates:default("target-texts", "all")
 function app:query($node as node()*, $model as map(*), $query as xs:string?, $mode as xs:string, 
-    $work-types as xs:string+, $target-texts as xs:string+) {
+    $work-authors as xs:string+, $target-texts as xs:string+) {
     let $queryExpr := app:create-query($query, $mode)
     return
         if (empty($queryExpr) or $queryExpr = "") then
@@ -303,18 +302,24 @@ function app:query($node as node()*, $model as map(*), $query as xs:string?, $mo
                     "query" := session:get-attribute("apps.zarit.query")
                 }
         else
-            (:Get the work ids of the work types selected.:)  
-            let $target-text-ids := distinct-values(doc(concat($config:data-root, '/', 'work-types.xml'))//item[value = $work-types]/id)
-            (:If no individual works have been selected, search in the works with ids selected by type;
-            if indiidual works have been selected, then neglect that no selection has been done in works according to type.:) 
+            (:$target-texts will either have the value 'all' or a sequence of text xml:ids.:)
             let $target-texts := 
-                if ($target-texts = 'all' and $work-types = 'all')
+                (:If no texts have been selected and no authors have been selected, search in all texts:)
+                if ($target-texts eq 'all' and $work-authors eq 'all')
                 then 'all' 
                 else 
-                    if ($target-texts = 'all')
-                    then $target-text-ids
+                    (:If one or more texts have been selected, but no authors have been selected, search in selected texts:)
+                    if ($target-texts ne 'all' and $work-authors eq 'all')
+                    then $target-texts
                     else 
-                        if ($work-types = "all") then $target-texts else ($target-texts[. = $target-text-ids])
+                        (:If no texts have been selected, but one or more authors have been selected, search in texts by selected authors:)
+                        if ($target-texts eq 'all' and $work-authors ne 'all')
+                        then distinct-values(collection($config:data-root)//tei:TEI[tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author = $work-authors]/@xml:id)
+                        else
+                            (:If one or more texts have been selected and one or more authors have been selected, search in union of selected texts and texts by selected authors:)
+                            if ($work-authors ne 'all' and $target-texts ne 'all') 
+                            then ($target-texts, distinct-values(collection($config:data-root)//tei:TEI[tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author = $work-authors]/@xml:id)) 
+                            else ()
             let $context := 
                 if ($target-texts = 'all')
                 then collection($config:data-root)/tei:TEI
